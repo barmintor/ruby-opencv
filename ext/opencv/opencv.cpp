@@ -519,6 +519,14 @@ init_ruby_module()
   REGISTER_HASH(smoothing_type, "median", CV_MEDIAN);
   REGISTER_HASH(smoothing_type, "bilateral", CV_BILATERAL);
 
+  VALUE border_type = rb_hash_new();
+  /* {:border_reflect_101, :border_replicate, :border_constant, :border_reflect}: Types of border inference */
+  rb_define_const(rb_module, "BORDER_TYPE", border_type);
+  REGISTER_HASH(border_type, "border_reflect_101", cv::BORDER_REFLECT101);
+  REGISTER_HASH(border_type, "border_replicate", cv::BORDER_REPLICATE);
+  REGISTER_HASH(border_type, "border_constant", cv::BORDER_CONSTANT);
+  REGISTER_HASH(border_type, "border_reflect", cv::BORDER_REFLECT);
+
   VALUE adaptive_method = rb_hash_new();
   /* {:mean_c, :gaussian_c}: Adaptive thresholding algorithm */
   rb_define_const(rb_module, "ADAPTIVE_METHOD", adaptive_method);

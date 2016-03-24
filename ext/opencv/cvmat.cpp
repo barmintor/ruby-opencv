@@ -4215,6 +4215,36 @@ rb_smooth_gaussian(int argc, VALUE *argv, VALUE self)
 
 /*
  * call-seq:
+ *   blur_gaussian() -> cvmat
+ */
+VALUE
+rb_blur_gaussian(int argc, VALUE *argv, VALUE self)
+{
+  VALUE p1, p2, p3, p4, p5, dest;
+  rb_scan_args(argc, argv, "05", &p1, &p2, &p3, &p4, &p5);
+  CvSize k_size = {IF_INT(p1, 3), IF_INT(p2, 3)};
+  int _bordertype = CVMETHOD("BORDER_TYPE", p5, cv::BORDER_DEFAULT);
+
+  CvArr* self_ptr = CVARR(self);
+  dest = new_mat_kind_object(cvGetSize(self_ptr), self);
+
+
+  try {
+    cv::Mat dest_mat;
+    cv::Mat self_mat(CVMAT(self));
+
+    cv::GaussianBlur(self_mat, dest_mat, k_size, IF_DBL(p3, 0.0), IF_DBL(p4, 0.0), _bordertype);
+    CvMat tmp = dest_mat;
+    cvCopy(&tmp, CVMAT(dest));
+  }
+  catch (cv::Exception& e) {
+    raise_cverror(e);
+  }
+
+  return dest;
+}
+/*
+ * call-seq:
  *   smooth_median([p1 = 3]) -> cvmat
  *
  * Smooths the image by median blur.
@@ -6021,6 +6051,7 @@ init_ruby_class()
   rb_define_method(rb_klass, "dilate!", RUBY_METHOD_FUNC(rb_dilate_bang), -1);
   rb_define_method(rb_klass, "morphology", RUBY_METHOD_FUNC(rb_morphology), -1);
 
+  rb_define_method(rb_klass, "blur_gaussian", RUBY_METHOD_FUNC(rb_blur_gaussian), -1);
   rb_define_method(rb_klass, "smooth", RUBY_METHOD_FUNC(rb_smooth), -1);
   rb_define_method(rb_klass, "copy_make_border", RUBY_METHOD_FUNC(rb_copy_make_border), -1);
   rb_define_method(rb_klass, "filter2d", RUBY_METHOD_FUNC(rb_filter2d), -1);
