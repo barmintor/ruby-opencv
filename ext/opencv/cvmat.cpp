@@ -4222,7 +4222,7 @@ rb_blur_gaussian(int argc, VALUE *argv, VALUE self)
 {
   VALUE p1, p2, p3, p4, p5, dest;
   rb_scan_args(argc, argv, "05", &p1, &p2, &p3, &p4, &p5);
-  CvSize k_size = {IF_INT(p1, 3), IF_INT(p2, 3)};
+  cv::Size k_size = cvSize(IF_INT(p1, 3), IF_INT(p2, 3));
   int _bordertype = CVMETHOD("BORDER_TYPE", p5, cv::BORDER_DEFAULT);
 
   CvArr* self_ptr = CVARR(self);
