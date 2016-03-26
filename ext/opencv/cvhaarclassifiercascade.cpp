@@ -53,6 +53,7 @@ rb_load(VALUE klass, VALUE path)
 {
   CvHaarClassifierCascade *cascade = NULL;
   try {
+    Check_Type(path, T_STRING);
     cascade = (CvHaarClassifierCascade*)cvLoad(StringValueCStr(path), 0, 0, 0);
   }
   catch (cv::Exception& e) {

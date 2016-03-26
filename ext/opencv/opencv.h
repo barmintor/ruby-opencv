@@ -134,6 +134,7 @@ extern "C" {
 #include "eigenfaces.h"
 #include "fisherfaces.h"
 #include "lbph.h"
+#include "cascadeclassifier.h"
 
 // GUI
 #include "gui.h"

@@ -808,6 +808,7 @@ extern "C" {
     mOpenCV::cEigenFaces::init_ruby_class();
     mOpenCV::cFisherFaces::init_ruby_class();
     mOpenCV::cLBPH::init_ruby_class();
+    mOpenCV::cCascadeClassifier::init_ruby_class();
 
     mOpenCV::mGUI::init_ruby_module();
     mOpenCV::mGUI::cWindow::init_ruby_class();

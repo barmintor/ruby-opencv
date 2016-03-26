@@ -39,6 +39,8 @@ examples/paint.rb
 examples/snake.rb
 ext/opencv/algorithm.cpp
 ext/opencv/algorithm.h
+ext/opencv/cascadeclassifier.cpp
+ext/opencv/cascadeclassifier.h
 ext/opencv/curve.cpp
 ext/opencv/curve.h
 ext/opencv/cvavgcomp.cpp
