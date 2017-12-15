@@ -78,7 +78,7 @@ create_seq(int seq_flags, size_t header_size, VALUE storage_value)
     break;
   case CV_SEQ_ELTYPE_CODE:
   case CV_SEQ_ELTYPE_INDEX:
-    klass = rb_cFixnum;
+    klass = rb_cInteger;
     break;
   case CV_SEQ_ELTYPE_PPOINT: // or CV_SEQ_ELTYPE_PTR:
     // Not supported
@@ -117,7 +117,7 @@ class2seq_flags_value(VALUE klass) {
   else if (klass == cCvPoint3D32f::rb_class()) {
     seq_flags = CV_SEQ_ELTYPE_POINT3D;
   }
-  else if (klass == rb_cFixnum) {
+  else if (klass == rb_cInteger) {
     seq_flags = CV_SEQ_ELTYPE_INDEX;
   }
   else {
@@ -406,7 +406,7 @@ rb_pop(VALUE self)
   VALUE object = Qnil;
   VALUE klass = seqblock_class(seq);
   try {
-    if (klass == rb_cFixnum) {
+    if (klass == rb_cInteger) {
       int n = 0;
       cvSeqPop(seq, &n);
       object = INT2FIX(n);
@@ -474,7 +474,7 @@ rb_shift(VALUE self)
 
   VALUE object = Qnil;
   try {
-    if (seqblock_class(seq) == rb_cFixnum) {
+    if (seqblock_class(seq) == rb_cInteger) {
       int n = 0;
       cvSeqPopFront(seq, &n);
       object = INT2NUM(n);
@@ -510,7 +510,7 @@ rb_each(VALUE self)
   if (seq->total > 0) {
     VALUE klass = seqblock_class(seq);
     try {
-      if (klass == rb_cFixnum)
+      if (klass == rb_cInteger)
 	for (int i = 0; i < seq->total; ++i)
 	  rb_yield(INT2NUM(*CV_GET_SEQ_ELEM(int, seq, i)));
       else
@@ -555,7 +555,7 @@ rb_insert(VALUE self, VALUE index, VALUE object)
   if (CLASS_OF(object) != klass)
     rb_raise(rb_eTypeError, "arguments should be %s.", rb_class2name(klass));
   try {
-    if (klass == rb_cFixnum) {
+    if (klass == rb_cInteger) {
       int n = NUM2INT(object);
       cvSeqInsert(seq, NUM2INT(index), &n);
     }
